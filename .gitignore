@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+2017/.idea/2017.iml
+2017/.idea/misc.xml
+2017/.idea/modules.xml
+2017/.idea/workspace.xml
