@@ -2,17 +2,9 @@
 # evenly divisible values
 
 # raw input
-test_1 = "5 1 9 5"
-test_2 = "7 5 3"
-test_3 = "2 4 6 8"
-
-# fixed input
-
-fixed_test_1 = test_1.split(' ')
-fixed_test_2 = test_2.split(' ')
-fixed_test_3 = test_3.split(' ')
-
-test_list = [fixed_test_1, fixed_test_2, fixed_test_3]
+test_input = '''5 9 2 8
+9 4 7 3
+3 8 6 5'''
 
 # REAL INPUT SOLVED WITHOUT THAT MANY VARIABLES
 
@@ -34,6 +26,7 @@ raw_input = '''790	99	345	1080	32	143	1085	984	553	98	123	97	197	886	125	947
 3928	107	3406	123	2111	2749	223	125	134	146	3875	1357	508	1534	4002	4417'''
 
 fixed_input = raw_input.split('\n')
+# fixed_input = test_input.split('\n')
 fixed_list = []
 prepared_list = []
 
@@ -41,19 +34,34 @@ for line in fixed_input:
     fixed_list.append(line)
 
 for line in fixed_list:
-    prepared_list.append(line.split('\t'))
+    prepared_list.append(line.split('\t'))  # \t for real results, ' ' for test
 
 checksum = 0
+times_counter = 1
+check_int = 1
 
 for each_list in prepared_list:
-    highest_number = 0
-    lowest_number = 1000000000000000
+    for each_number in range(len(each_list[:-1])):
+        first_number = int(each_list[each_number])
+        iteration_number = 1  # for iterating over sliced list
 
-    for each_number in each_list:
-        if int(each_number) > highest_number:
-            highest_number = int(each_number)
-        if int(each_number) < lowest_number:
-            lowest_number = int(each_number)
-    checksum += (highest_number - lowest_number)
+        # every number after current one
+        try:
+            for numbers in each_list[each_number + 1:]:
+                second_number = int(each_list[each_number + iteration_number])
+
+                if first_number % second_number == 0:
+                    # print('first')
+                    checksum += int(first_number / second_number)
+                    break
+                elif second_number % first_number == 0:
+                    # print('second', str(second_number/first_number), str(second_number), str(first_number))
+                    checksum += int(second_number / first_number)
+                    break
+                else:
+                    iteration_number += 1
+
+        except IndexError:
+            print("indexError")
 
 print(checksum)
